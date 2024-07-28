@@ -9,9 +9,9 @@ The AuthN-AuthZ project is a web application focused on implementing user authen
 - **Security Implementation:** To ensure the application is protected against common security threats.
 
 ### Technologies Used
-- **Backend:** [Specify the backend technology used, e.g., Node.js, Express.js]
-- **Database:** [Specify the database used, e.g., MongoDB, MySQL]
-- **Authentication:** [Specify the authentication method used, e.g., JWT, OAuth]
+- **Backend:** Node.js, Express.js
+- **Database:**  MongoDB Compass, mongoose
+- **Authentication:** JWT
 
 ### Key Features
 - **Signup Page:** Allows new users to create an account.
