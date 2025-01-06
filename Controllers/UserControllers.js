@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const UserModels = require("../Models/UserModels")
 const bcrypt = require("bcrypt");
+const {sendEmail} = require("../Utils/email")
 require("dotenv").config();
 
 exports.signUp = async (req,res) => {
@@ -45,6 +46,18 @@ exports.signUp = async (req,res) => {
         // Store the user data in DB..
         const storeData = await UserModels.create({name, email, password:hashPassword, role});
         console.log(`Your response is here : ${storeData}`)
+        
+        // Send email after signup
+        await sendEmail(
+            email,
+            "SignUp Notification",
+            `<h3>Welcome to AuthN-AuthZ Web Applications, ${name}!</h3>
+            <p>Thank you for signing up and joining our growing community.</p>
+            <p>Explore all the exciting features we’ve built just for you, and make the most of your experience with us.</p>
+            <p>If you have any questions or need assistance, feel free to reach out to our support team anytime.</p>
+            <p>Warm regards,<br>The AuthN-AuthZ Team</p>`
+           
+        );
         
         // Success response
         res.status(201).json(
@@ -111,6 +124,14 @@ exports.login = async (req,res) => {
         delete userResponse.password  // Remove password from the user object
         userResponse.token = token;   // Add token to the user object
         console.log("User Response Here -->>",userResponse);
+        
+        // Send email after login
+        await sendEmail(
+            email,
+            "Login Notification",
+            `<h2>Hi, ${user.name}!</h2>
+            <p>You have successfully logged in to AuthN-AuthZ Web Applications.</p>`
+        );
 
         const cookieOptions = {
             httpOnly: true,          // Prevent client-side access to the cookie
